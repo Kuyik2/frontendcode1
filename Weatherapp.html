@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <a href="To_do_list.html"
+    target="_blank"
+    title="Goes to To_do_list">
+        Home
+    </a>
+
+    <br>
+
+    <a href="mailto:basseykuyik1@gmail.com">
+        Email
+    </a>
+
+    <br>
+
+    <a href="https://www.youtube.com/@KuyikBassey">
+        view my Videos
+    </a>
+    </header>
+
+    <div class="container">
+        <h1>Kuyik's Weather App</h1>
+        <div class="input-container">
+            <input type="text" id="cityInput" placeholder="Enter city name">
+            <button onclick="getWeather()">Get Weather</button>
+        </div>
+        <div id="weatherDisplay" class="weather-display">
+            <h2 id="cityName"></h2>
+            <p id="temperature"></p>
+            <p id="description"></p>
+            <img id="weatherIcon" src="" alt="Weather Icon">
+            <p id="errorMessage" class="error-message"></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+<style>
+   * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #acb6e5); /* Gradient background */
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.container {
+    width: 90%;
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.95); /* Semi-transparent white */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+h1 {
+    color: #2c3e50; /* Deep blue-gray */
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #bdc3c7; /* Light gray border */
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #f7f9fc; /* Very light blue-gray */
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #27ae60; /* Vibrant green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #219653; /* Darker green on hover */
+}
+
+.weather-display {
+    padding: 20px;
+    border-radius: 5px;
+    transition: background-color 0.5s ease; /* Smooth color transition */
+}
+
+/* Dynamic background colors based on weather */
+.weather-display.sunny {
+    background-color: #f1c40f; /* Warm yellow for sunny */
+}
+
+.weather-display.cloudy {
+    background-color: #95a5a6; /* Cool gray for cloudy */
+}
+
+.weather-display.rain {
+    background-color: #3498db; /* Light blue for rain */
+}
+
+.weather-display.thunderstorm {
+    background-color: #34495e; /* Darker blue-gray for thunderstorm */
+}
+
+.weather-display.snow {
+    background-color: #dfe6e9; /* Pale blue for snow */
+}
+
+.weather-display.default {
+    background-color: #ecf0f1; /* Neutral light gray for other conditions */
+}
+
+h2 {
+    color: #2c3e50; /* Deep blue-gray */
+    margin: 0 0 10px 0;
+    font-size: 1.5rem;
+}
+
+p {
+    margin: 5px 0;
+    color: #7f8c8d; /* Medium gray */
+    font-size: 1.1rem;
+}
+
+#weatherIcon {
+    width: 100px;
+    height: 100px;
+    margin: 10px 0;
+}
+
+#weatherIcon[style*="display: none"] + p {
+    margin-top: 10px;
+}
+
+.error-message {
+    color: #e74c3c; /* Bold red */
+    display: none;
+    font-size: 1rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        width: 100%;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .input-container {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .weather-display {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
+
+    #weatherIcon {
+        width: 80px;
+        height: 80px;
+    }
+
+    .error-message {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    input[type="text"] {
+        font-size: 0.85rem;
+    }
+
+    button {
+        font-size: 0.85rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+
+    p {
+        font-size: 0.85rem;
+    }
+
+    #weatherIcon {
+        width: 60px;
+        height: 60px;
+    }
+}
+</style>
+</head>
+
+<script>
+    // Replace with your OpenWeatherMap API key
+const API_KEY = '4ebf625b837e3c80dd1a0bfae0237e89'; // Sign up at https://openweathermap.org/ to get your key
+
+function getWeather() {
+    const cityInput = document.getElementById('cityInput').value.trim();
+    const weatherDisplay = document.getElementById('weatherDisplay');
+    const errorMessage = document.getElementById('errorMessage');
+    const cityName = document.getElementById('cityName');
+    const temperature = document.getElementById('temperature');
+    const description = document.getElementById('description');
+    const weatherIcon = document.getElementById('weatherIcon');
+
+    // Clear previous error message and hide it
+    errorMessage.style.display = 'none';
+    weatherIcon.style.display = 'none'; // Hide icon initially
+    
+    if (!cityInput) {
+        showError('Please enter a city name');
+        clearWeatherDisplay();
+        return;
+    }
+
+    // API URL with city name and metric units (Celsius)
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput}&appid=${API_KEY}&units=metric`;
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('City not found or API error');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Update weather information
+            cityName.textContent = data.name;
+            temperature.textContent = `Temperature: ${data.main.temp}°C`;
+            description.textContent = data.weather[0].description;
+
+            // Set weather icon
+            const iconCode = data.weather[0].icon;
+            if (iconCode) {
+                weatherIcon.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+                weatherIcon.style.display = 'block'; // Show icon
+            } else {
+                weatherIcon.style.display = 'none'; // Hide if no icon
+            }
+
+            weatherDisplay.style.display = 'block';
+        })
+        .catch(error => {
+            showError(error.message);
+            clearWeatherDisplay();
+        });
+}
+
+// Function to show error message
+function showError(message) {
+    const errorMessage = document.getElementById('errorMessage');
+    errorMessage.textContent = message;
+    errorMessage.style.display = 'block';
+}
+
+// Function to clear weather display
+function clearWeatherDisplay() {
+    document.getElementById('cityName').textContent = '';
+    document.getElementById('temperature').textContent = '';
+    document.getElementById('description').textContent = '';
+    document.getElementById('weatherIcon').style.display = 'none';
+}
+
+// Add event listener for Enter key
+document.getElementById('cityInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        getWeather();
+    }
+});
+</script>
+</body>
+</html>

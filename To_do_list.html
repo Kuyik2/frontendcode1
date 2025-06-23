@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple To-Do List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <div class="input-container">
+            <input type="text" id="taskInput" placeholder="Enter a new task">
+            <button onclick="addTask()">Add Task</button>
+        </div>
+        <ul id="taskList"></ul>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+    <style>
+        /* Add your CSS styles here */
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.input-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+}
+
+.delete-btn {
+    background-color: #ff4444;
+    padding: 5px 10px;
+}
+
+.delete-btn:hover {
+    background-color: #cc0000;
+}
+    </style>
+</head>
+
+    <script>
+        // Your JavaScript code goes here
+
+// Array of possible colors for list items
+const colors = [
+    '#f9ebee', // light pink
+    '#e8f5e9', // light green
+    '#e3f2fd', // light blue
+    '#fff3e0', // light orange
+    '#f3e5f5'  // light purple
+];
+
+// Variable to track the last used color
+let lastColor = null;
+
+function addTask() {
+    // Get the input value
+    const taskInput = document.getElementById('taskInput');
+    const taskText = taskInput.value.trim();
+
+    // Check if input is not empty
+    if (taskText !== '') {
+        // Create new list item
+        const li = document.createElement('li');
+        
+        // Select a new color different from the last one
+        let newColor;
+        do {
+            newColor = colors[Math.floor(Math.random() * colors.length)];
+        } while (newColor === lastColor && colors.length > 1); // Ensure it's different unless only one color exists
+        
+        // Update lastColor and apply the new color
+        lastColor = newColor;
+        li.style.backgroundColor = newColor;
+
+        // Create checkbox
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.onclick = function() {
+            span.classList.toggle('completed');
+        };
+
+        // Create span for task text
+        const span = document.createElement('span');
+        span.textContent = taskText;
+        span.className = 'task-text';
+        
+        // Create delete button
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.onclick = function() {
+            li.remove();
+        };
+
+        // Append elements to list item
+        li.appendChild(checkbox);
+        li.appendChild(span);
+        li.appendChild(deleteBtn);
+
+        // Add list item to the task list
+        document.getElementById('taskList').appendChild(li);
+
+        // Clear input
+        taskInput.value = '';
+    }
+}
+
+// Add task when Enter key is pressed
+document.getElementById('taskInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        addTask();
+    }
+});
+    </script>
+</body>
+</html>
